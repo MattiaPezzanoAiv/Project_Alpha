@@ -48,6 +48,7 @@ public abstract class Statistics : MonoBehaviour,IStatistic {
 
         set
         {
+            hP = value;
             if (hP > maxHP)
                 hP = maxHP;
 
