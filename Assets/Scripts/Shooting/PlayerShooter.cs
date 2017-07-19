@@ -19,7 +19,7 @@ public class PlayerShooter : MonoBehaviour {
         float ver = CrossPlatformInputManager.GetAxis("Vertical");
         if (hor == 0 && ver == 0) return;
 
-        Vector3 newFor = Camera.main.transform.right * hor + Camera.main.transform.forward * ver;
+        Vector3 newFor = Camera.main.transform.right * hor + Camera.main.transform.up * ver;
         newFor.y = 0;
         transform.forward = newFor;
         transform.position += newFor * 5 * Time.deltaTime;
