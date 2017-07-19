@@ -31,7 +31,7 @@ public class Zombie : MonoBehaviour,IDamageable {
 	void Update () {
 
 
-        Vector3 newFor = player.transform.position - transform.position;
+        Vector3 newFor = (player.transform.position - transform.position).normalized;
         transform.forward = newFor;
         transform.position += newFor * speed * Time.deltaTime;	
 	}

@@ -28,7 +28,7 @@ public class PlayerShooter : MonoBehaviour {
         if (horShoot != 0 && verShoot != 0) //shooting
         {
 
-            Vector3 newFor = Camera.main.transform.right * horShoot + Camera.main.transform.up * verShoot;
+            Vector3 newFor = (Camera.main.transform.right * horShoot + Camera.main.transform.up * verShoot).normalized;
             newFor.y = 0;
             transform.forward = newFor;
             Shot();
@@ -38,7 +38,8 @@ public class PlayerShooter : MonoBehaviour {
         float ver = CrossPlatformInputManager.GetAxis("Vertical");
         if (hor == 0 && ver == 0) return;
 
-        Vector3 newDir = Camera.main.transform.right * hor + Camera.main.transform.up * ver;
+        Vector3 newDir = (Camera.main.transform.right * hor + Camera.main.transform.up * ver).normalized;
+        newDir.y = 0;
         transform.position += newDir * myStat.Speed * Time.deltaTime;
     }
 
