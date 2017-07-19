@@ -12,4 +12,5 @@ public interface IStatistic  {
     /// must be normalized value, ex. if 0.80f the damage taken it's equal to damage * (1- 0.8f); reduce damage by 80%
     /// </summary>
     float DamageReduction { get; set; }
+    float Speed { get; set; }
 }

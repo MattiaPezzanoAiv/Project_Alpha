@@ -77,6 +77,21 @@ public abstract class Statistics : MonoBehaviour,IStatistic {
         }
     }
 
+    private float speed;
+    public float Speed
+    {
+        get
+        {
+            return speed;
+        }
+
+        set
+        {
+            speed = value;
+            if (speed < 0) speed = 0;
+        }
+    }
+
     // Use this for initialization
     void Start () {
 		

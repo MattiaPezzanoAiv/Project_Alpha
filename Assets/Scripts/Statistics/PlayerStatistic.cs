@@ -11,6 +11,8 @@ public class PlayerStatistic : Statistics {
     private int setPlayerAttackPower;
     [SerializeField]
     private float setPlayerDamageRedcution;
+    [SerializeField]
+    private float setPlayerSpeed;
     #endregion
 
 
@@ -25,6 +27,7 @@ public class PlayerStatistic : Statistics {
 
         AttackPower = setPlayerAttackPower;
         DamageReduction = setPlayerDamageRedcution;
+        Speed = setPlayerSpeed;
     }
     
     
@@ -35,7 +38,7 @@ public class PlayerStatistic : Statistics {
 	
 	// Update is called once per frame
 	void Update () {
-        Debug.Log(HP);
+
         
 	}
 }
