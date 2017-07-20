@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class MainSceneController : MonoBehaviour {
 
@@ -33,6 +34,7 @@ public class MainSceneController : MonoBehaviour {
     {
         //do thing 
         //load play scene
+        SceneManager.LoadSceneAsync("Game");
     }
 
     private void OnCredits()

@@ -5,4 +5,6 @@ using UnityEngine;
 public interface IBullet : IPoolable {
 
     float DestroyTime { get; set; }
+    void SetOwner(GameObject go);
+
 }

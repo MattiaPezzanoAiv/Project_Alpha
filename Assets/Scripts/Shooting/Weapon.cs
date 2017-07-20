@@ -23,6 +23,7 @@ public class Weapon : MonoBehaviour,IShooter {
         bullet.GetActiveInstance().transform.position = spawnPoint.position;
         bullet.GetActiveInstance().transform.forward = spawnPoint.forward;
         bullet.GetActiveInstance().SetActive(true);
+        bullet.SetOwner(transform.parent.gameObject);
         shotCD = cadency;
     }
 

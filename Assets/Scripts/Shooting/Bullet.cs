@@ -12,6 +12,12 @@ public class Bullet : MonoBehaviour,IBullet {
     [SerializeField]
     private float speed;
 
+    private GameObject owner;
+
+    public void SetOwner(GameObject go)
+    {
+        owner = go;
+    }
 
     public Pool Pool
     {
@@ -62,4 +68,17 @@ public class Bullet : MonoBehaviour,IBullet {
             Pool.Recycle<IBullet>(this);
         }
 	}
+
+    void OnTriggerEnter(Collider col)
+    {
+        IDamageable damageable = col.GetComponent<IDamageable>();
+        if(damageable != null && col.gameObject != owner)
+        {
+            PlayerStatistic playerStat = owner.GetComponent<PlayerStatistic>();
+            PlayerStatistic enemyStat = col.GetComponent<PlayerStatistic>();
+            float dmgTaken = (Damage + playerStat.AttackPower) * (1 - enemyStat.DamageReduction);
+            damageable.GetDamage((int)dmgTaken);
+            Pool.Recycle<IBullet>(this);
+        }
+    }
 }
