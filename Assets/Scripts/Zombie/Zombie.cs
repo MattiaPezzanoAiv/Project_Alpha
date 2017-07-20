@@ -52,11 +52,13 @@ public class Zombie : MonoBehaviour,IDamageable,IZombie {
     public void OnGet()
     {
         gameObject.SetActive(true);
+        ZombieSpawner.ZombiesOnScreen++;
     }
 
     public void OnRecycle()
     {
         gameObject.SetActive(false);
+        ZombieSpawner.ZombiesOnScreen--;
     }
 
     public GameObject GetActiveInstance()

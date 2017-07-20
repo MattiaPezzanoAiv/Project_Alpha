@@ -69,16 +69,24 @@ public class Bullet : MonoBehaviour,IBullet {
         }
 	}
 
-    void OnTriggerEnter(Collider col)
+    void OnCollisionEnter(Collision col)
     {
-        IDamageable damageable = col.GetComponent<IDamageable>();
-        if(damageable != null && col.gameObject != owner)
+        if (col.gameObject == owner) return;    //it's me
+
+        IDamageable damageable = col.collider.GetComponent<IDamageable>();
+        if(damageable != null)
         {
             PlayerStatistic playerStat = owner.GetComponent<PlayerStatistic>();
-            PlayerStatistic enemyStat = col.GetComponent<PlayerStatistic>();
+            PlayerStatistic enemyStat = col.collider.GetComponent<PlayerStatistic>();
             float dmgTaken = (Damage + playerStat.AttackPower) * (1 - enemyStat.DamageReduction);
             damageable.GetDamage((int)dmgTaken);
-            Pool.Recycle<IBullet>(this);
+            //spawn blood particle
         }
+        ISceneObject sceneObject = col.collider.GetComponent<ISceneObject>();
+        if(sceneObject != null)
+        {
+            sceneObject.Hitted();
+        }
+        Pool.Recycle<IBullet>(this);
     }
 }

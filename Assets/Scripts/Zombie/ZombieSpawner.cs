@@ -4,19 +4,23 @@ using UnityEngine;
 
 public class ZombieSpawner : MonoBehaviour,ISpawner {
 
+    public static int ZombiesOnScreen;
+
     [SerializeField]
     private List<GameObject> zombiePrefabs;
     [SerializeField]
     private List<Transform> spawningPoints; //implements child of spawwning points
     [SerializeField]
     private bool spawnRandomly;
-    [SerializeField]
+    [SerializeField][Range(1,6)]
     private int minUnitsPerGroupSpawned;
-    [SerializeField]
+    [SerializeField][Range(1,6)]
     private int maxUnitsPerGroupSpawned;
     [SerializeField]
     private float spawnFrequency;
     private float spawnCD;
+    [SerializeField]
+    private float maxZombiesOnScreen;
 
     private int lastIndexSpawned;
     private int LastIndexSpawned
@@ -57,24 +61,28 @@ public class ZombieSpawner : MonoBehaviour,ISpawner {
 
     public void Spawn()
     {
-        Vector3 spawnPos = Vector3.zero;
+
+        Transform spawnPos = null;
         if(!spawnRandomly)
         {
-            spawnPos = spawningPoints[LastIndexSpawned++].position;
+            spawnPos = spawningPoints[LastIndexSpawned++];
         }
         else
         {
             int index = Random.Range(0, spawningPoints.Count);
-            spawnPos = spawningPoints[index].position;
+            spawnPos = spawningPoints[index];
         }
 
         //spawning zombies
         int nOfZombies = Random.Range(minUnitsPerGroupSpawned, maxUnitsPerGroupSpawned + 1);
-        for (int i = 0; i < nOfZombies; i++)
+        for (int i = 0; i < spawnPos.childCount; i++)
         {
-            GameObject zombie = GlobalFactory.Get<IZombie>(zombiePrefabs[0]).GetActiveInstance();
-            zombie.transform.position = spawnPos;
+            if (nOfZombies < 0) break; //stop spawning
+            if (ZombiesOnScreen >= maxZombiesOnScreen) return;
 
+            GameObject zombie = GlobalFactory.Get<IZombie>(zombiePrefabs[0]).GetActiveInstance();
+            zombie.transform.position = spawnPos.GetChild(i).position;
+            nOfZombies--;
         }
 
         
