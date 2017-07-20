@@ -5,13 +5,13 @@ using UnityEngine;
 public class Barrel : MonoBehaviour,IBarrel {
 
     [SerializeField]
-    private GameObject explosionParticle;
+    protected GameObject explosionParticle;
     [SerializeField]
-    private int hitCountBeforeDestory;
-    private int currentHitCount;
+    protected int hitCountBeforeDestory;
+    protected int currentHitCount;
 
 
-    public void Hitted()
+    public virtual void Hitted()
     {
         currentHitCount--;
         if(currentHitCount <= 0)
@@ -21,7 +21,7 @@ public class Barrel : MonoBehaviour,IBarrel {
         }
     }
     
-    public void SpawnParticle()
+    public virtual void SpawnParticle()
     {
         GameObject explosion = GlobalFactory.Get<IExplosion>(explosionParticle).GetActiveInstance();
         explosion.transform.position = transform.position;
