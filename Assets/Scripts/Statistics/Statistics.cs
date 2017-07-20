@@ -101,4 +101,10 @@ public abstract class Statistics : MonoBehaviour,IStatistic {
 	void Update () {
 		
 	}
+
+    //must be overrided
+    public virtual void Reset()
+    {
+        throw new UnityException("RESET NOT IMPLEMENTED");
+    }
 }

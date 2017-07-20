@@ -3,12 +3,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Explosion : MonoBehaviour,IExplosion {
+public class Blood : MonoBehaviour,IBlood {
 
     [SerializeField]
     private float destroyTime;
     private float destroyCD;
-
 
 
     public Pool Pool
@@ -34,21 +33,18 @@ public class Explosion : MonoBehaviour,IExplosion {
     }
 
     // Use this for initialization
-    void Awake () { 
-
-    }
-
-    // Update is called once per frame
-    void Update () {
-
-      
-
+    void Start () {
+		
+	}
+	
+	// Update is called once per frame
+	void Update () {
 
         if (destroyCD > 0)
             destroyCD -= Time.deltaTime;
-        if(destroyCD <= 0)
+        if (destroyCD <= 0)
         {
-            Pool.Recycle<IExplosion>(this);
+            Pool.Recycle<IBlood>(this);
         }
-	}
+    }
 }

@@ -7,6 +7,8 @@ public class Zombie : MonoBehaviour,IDamageable,IZombie {
 
     private Statistics stat;
     private GameObject player;
+    [SerializeField]
+    private GameObject bloodParticlePrefab;
 
     [SerializeField]
     private float speed;
@@ -23,10 +25,14 @@ public class Zombie : MonoBehaviour,IDamageable,IZombie {
         stat.HP -= amount;
         if(stat.HP <= 0)
         {
-            Pool.Recycle<IPoolable>(this);
+            Pool.Recycle<IZombie>(this);
+            return;
         }
-        Debug.Log("taken damage " + amount);
         //instance particle of blood
+        GameObject blood = GlobalFactory.Get<IBlood>(bloodParticlePrefab).GetActiveInstance();
+        Transform bloodSpawner = transform.Find("BloodSpawner");
+        blood.transform.position = bloodSpawner.position;
+        blood.transform.forward = bloodSpawner.forward;
     }
 
     void Awake()
@@ -52,6 +58,7 @@ public class Zombie : MonoBehaviour,IDamageable,IZombie {
     public void OnGet()
     {
         gameObject.SetActive(true);
+        stat.Reset();
         ZombieSpawner.ZombiesOnScreen++;
     }
 

@@ -16,8 +16,15 @@ public class PlayerStatistic : Statistics {
     #endregion
 
 
-    
 
+    public override void Reset()
+    {
+        MaxHP = setPlayerHP;
+        HP = MaxHP;
+        AttackPower = setPlayerAttackPower;
+        Speed = setPlayerSpeed;
+        DamageReduction = setPlayerDamageRedcution;
+    }
 
 
     void Awake()

@@ -35,6 +35,8 @@ public class Bullet : MonoBehaviour,IBullet {
         set { destroyTime = value; }
     }
 
+  
+
     public GameObject GetActiveInstance()
     {
         return gameObject;

@@ -13,4 +13,5 @@ public interface IStatistic  {
     /// </summary>
     float DamageReduction { get; set; }
     float Speed { get; set; }
+    void Reset();
 }
