@@ -16,6 +16,8 @@ public class Barrel : MonoBehaviour,IBarrel {
         currentHitCount--;
         if(currentHitCount <= 0)
         {
+            //this call spawn points text assets and update points in ui
+            PointsManager.Instance.SpawnPoints(transform.position + (Vector3.up * 2f), PointsManager.Instance.AddKillPoints());
             SpawnParticle();
             Destroy(gameObject);
         }

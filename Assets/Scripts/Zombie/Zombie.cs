@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class Zombie : MonoBehaviour,IDamageable,IZombie {
 
@@ -9,6 +10,7 @@ public class Zombie : MonoBehaviour,IDamageable,IZombie {
     private GameObject player;
     [SerializeField]
     private GameObject bloodParticlePrefab;
+    private NavMeshAgent agent;
 
     [SerializeField]
     private float speed;
@@ -25,6 +27,8 @@ public class Zombie : MonoBehaviour,IDamageable,IZombie {
         stat.HP -= amount;
         if(stat.HP <= 0)
         {
+            //this call spawn points text assets and update points in ui
+            PointsManager.Instance.SpawnPoints(transform.position + (Vector3.up * 2f), PointsManager.Instance.AddKillPoints());
             Pool.Recycle<IZombie>(this);
             return;
         }
@@ -39,6 +43,7 @@ public class Zombie : MonoBehaviour,IDamageable,IZombie {
     {
         stat = GetComponent<PlayerStatistic>();
         player = GameObject.FindObjectOfType<PlayerShooter>().gameObject;
+        agent = GetComponent<NavMeshAgent>();
     }
 
     // Use this for initialization
@@ -49,16 +54,22 @@ public class Zombie : MonoBehaviour,IDamageable,IZombie {
 	// Update is called once per frame
 	void Update () {
 
-
-        Vector3 newFor = (player.transform.position - transform.position).normalized;
-        transform.forward = newFor;
-        transform.position += newFor * speed * Time.deltaTime;	
+        agent.SetDestination(player.transform.position); //set target to agent 
+        if(Vector3.Distance(player.transform.position,transform.position) <= .8f)
+        {
+            agent.isStopped = true;
+            //attacking
+        }
+        //Vector3 newFor = (player.transform.position - transform.position).normalized;
+        //transform.forward = newFor;
+        //transform.position += newFor * speed * Time.deltaTime;	
 	}
 
     public void OnGet()
     {
         gameObject.SetActive(true);
         stat.Reset();
+        agent.speed = speed;
         ZombieSpawner.ZombiesOnScreen++;
     }
 

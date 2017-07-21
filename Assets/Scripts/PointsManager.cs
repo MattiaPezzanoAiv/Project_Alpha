@@ -2,8 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class PointsManager : MonoBehaviour {
+
+    public static PointsManager Instance
+    {
+        get { return GameObject.FindObjectOfType<PointsManager>(); }
+    }
 
     [SerializeField]
     private GameObject player;
@@ -13,7 +19,8 @@ public class PointsManager : MonoBehaviour {
     private int pointsPerKill;
     [SerializeField]
     private int pointsPerExplosion;
-
+    [SerializeField]
+    private GameObject pointPrefab;
 
     private int points;
     public int Points
@@ -36,12 +43,37 @@ public class PointsManager : MonoBehaviour {
     {
         textFieldOnCanvas.text = string.Format("Points: {0}", Points);
     }
-    public void AddKillPoints()
+    /// <summary>
+    /// Return points added
+    /// </summary>
+    /// <returns></returns>
+    public int AddKillPoints()
     {
         points += pointsPerKill;
+        UpdatePoints();
+        return pointsPerKill;
     }
-    public void AddExplosionPoints()
+    /// <summary>
+    /// Return points added
+    /// </summary>
+    /// <returns></returns>
+    public int AddExplosionPoints()
     {
         points += pointsPerExplosion;
+        UpdatePoints();
+        return pointsPerExplosion;
+    }
+    public string PointsAssetName
+    {
+        get
+        {
+            return "PointTextPro";
+        }
+    }
+    public void SpawnPoints(Vector3 pos,int points)
+    {
+        GameObject go = GlobalFactory.Get<IPoints>(pointPrefab).GetActiveInstance();
+        go.transform.position = pos;
+        go.GetComponentInChildren<TextMeshPro>().SetText(""+points);
     }
 }
