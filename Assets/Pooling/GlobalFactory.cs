@@ -8,7 +8,7 @@ public static class GlobalFactory
 
 	static GlobalFactory()
     {
-        pools = new Dictionary<GameObject, Pool>();
+        Restart();
 	}
 
     public static T Get<T>(GameObject item) where T : IPoolable
@@ -20,5 +20,9 @@ public static class GlobalFactory
     public static void Recycle<T>(GameObject item) where T : IPoolable
     {
         pools[item].Recycle<T>(item.GetComponent<T>());
+    }
+    public static void Restart()
+    {
+        pools = new Dictionary<GameObject, Pool>();
     }
 }
