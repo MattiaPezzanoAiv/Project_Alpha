@@ -25,6 +25,9 @@ public class MainSceneController : MonoBehaviour {
         play.onClick.AddListener(OnPlay);
         credits.onClick.AddListener(OnCredits);
         scores.onClick.AddListener(OnScores);
+
+        string s = SystemInfo.deviceUniqueIdentifier;
+        Debug.Log("");
     }
 
     // Update is called once per frame
