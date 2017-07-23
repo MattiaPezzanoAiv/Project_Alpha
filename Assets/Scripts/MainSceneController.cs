@@ -48,6 +48,6 @@ public class MainSceneController : MonoBehaviour {
     }
     private void OnScores()
     {
-
+        SceneManager.LoadSceneAsync("Scores");
     }
 }
