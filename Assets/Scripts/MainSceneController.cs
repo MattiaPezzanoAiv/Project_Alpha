@@ -10,19 +10,21 @@ public class MainSceneController : MonoBehaviour {
     private Button play;
     [SerializeField]
     private Button credits;
+    [SerializeField]
+    private Button scores;
 
 	// Use this for initialization
 	void Start () {
-		if(play == null || credits == null) //null check
+		if(play == null || credits == null || scores == null) //null check
         {
-            Debug.LogError("CREDITS/PLAY HAVE NULL VALUE");
+            Debug.LogError("CREDITS/PLAY/SCORES HAVE NULL VALUE");
             Debug.Break();
         }
 
         //assign button operation from code
         play.onClick.AddListener(OnPlay);
         credits.onClick.AddListener(OnCredits);
-
+        scores.onClick.AddListener(OnScores);
     }
 
     // Update is called once per frame
@@ -34,6 +36,7 @@ public class MainSceneController : MonoBehaviour {
     {
         //do thing 
         //load play scene
+        GlobalFactory.Restart();
         SceneManager.LoadSceneAsync("Game");
     }
 
@@ -41,5 +44,9 @@ public class MainSceneController : MonoBehaviour {
     {
         //do thing
         //load credits scene
+    }
+    private void OnScores()
+    {
+
     }
 }
