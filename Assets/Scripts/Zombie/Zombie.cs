@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.SceneManagement;
 
 public class Zombie : MonoBehaviour,IDamageable,IZombie {
 
@@ -55,10 +56,12 @@ public class Zombie : MonoBehaviour,IDamageable,IZombie {
 	void Update () {
 
         agent.SetDestination(player.transform.position); //set target to agent 
-        if(Vector3.Distance(player.transform.position,transform.position) <= .8f)
+        if(Vector3.Distance(player.transform.position,transform.position) <= 1.5f)
         {
             agent.isStopped = true;
             //attacking
+            //now die with one shot
+            SceneManager.LoadSceneAsync("Main");
         }
         //Vector3 newFor = (player.transform.position - transform.position).normalized;
         //transform.forward = newFor;

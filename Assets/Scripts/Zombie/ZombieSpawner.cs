@@ -42,7 +42,7 @@ public class ZombieSpawner : MonoBehaviour,ISpawner {
 
     // Use this for initialization
     void Start () {
-		
+        Restart();
 	}
 	
 	// Update is called once per frame
@@ -58,7 +58,7 @@ public class ZombieSpawner : MonoBehaviour,ISpawner {
             spawnCD = spawnFrequency;
         }
     }
-
+  
     public void Spawn()
     {
 
@@ -81,10 +81,15 @@ public class ZombieSpawner : MonoBehaviour,ISpawner {
             if (ZombiesOnScreen >= maxZombiesOnScreen) return;
 
             GameObject zombie = GlobalFactory.Get<IZombie>(zombiePrefabs[0]).GetActiveInstance();
-            zombie.transform.position = spawnPos.GetChild(i).position;
+            zombie.transform.position = spawnPos.GetChild(i).position; 
             nOfZombies--;
         }
+    }
 
-        
+    public void Restart()
+    {
+        lastIndexSpawned = 0;
+        spawnCD = spawnFrequency;
+        ZombiesOnScreen = 0;
     }
 }
