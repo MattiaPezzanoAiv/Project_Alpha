@@ -21,6 +21,14 @@ public class BestScoresController : MonoBehaviour {
 
     private string deviceID;
 
+
+    #region StaticCall
+    private static UnityWebRequest staticPostRequest;
+    private static AsyncOperation staticAsyncOp;
+    #endregion
+
+
+
     void Awake()
     {
         otherScores = new List<Text>();
@@ -38,7 +46,7 @@ public class BestScoresController : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		
+        
 	}
 	
 	// Update is called once per frame
@@ -77,5 +85,16 @@ public class BestScoresController : MonoBehaviour {
     public void Back()
     {
         UnityEngine.SceneManagement.SceneManager.LoadSceneAsync("Main");
+    }
+
+
+    public static void SendBestScoreToServer(Score score) 
+    {
+        WWWForm scoreForm = new WWWForm();
+        scoreForm.AddField("DeviceID", score.DeviceID);
+        scoreForm.AddField("Points", score.Points.ToString());
+        staticPostRequest = UnityWebRequest.Post("http://127.0.0.1:2000/", scoreForm);
+        staticPostRequest.Send();
+        Debug.Log(staticPostRequest.url);
     }
 }

@@ -7,7 +7,7 @@ using UnityEngine.SceneManagement;
 
 public class Zombie : MonoBehaviour,IDamageable,IZombie {
 
-    private Statistics stat;
+    private EnemyStatistic stat;
     private GameObject player;
     [SerializeField]
     private GameObject bloodParticlePrefab;
@@ -42,7 +42,7 @@ public class Zombie : MonoBehaviour,IDamageable,IZombie {
 
     void Awake()
     {
-        stat = GetComponent<PlayerStatistic>();
+        stat = GetComponent<EnemyStatistic>();
         player = GameObject.FindObjectOfType<PlayerShooter>().gameObject;
         agent = GetComponent<NavMeshAgent>();
     }

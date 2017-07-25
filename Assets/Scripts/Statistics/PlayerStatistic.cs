@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 
 public class PlayerStatistic : Statistics {
 
@@ -29,12 +30,7 @@ public class PlayerStatistic : Statistics {
 
     void Awake()
     {
-        MaxHP = setPlayerHP;
-        HP = MaxHP;
-
-        AttackPower = setPlayerAttackPower;
-        DamageReduction = setPlayerDamageRedcution;
-        Speed = setPlayerSpeed;
+        Reset();
     }
     
     
@@ -46,6 +42,21 @@ public class PlayerStatistic : Statistics {
 	// Update is called once per frame
 	void Update () {
 
+        if (HP <= 0)
+            Die();
         
 	}
+
+
+    public void Die()
+    {
+        //set die animation
+        Score myScore = new Score();
+        myScore.Points = PointsManager.Instance.Points;
+        myScore.EndPoint = null;
+        myScore.DeviceID = SystemInfo.deviceUniqueIdentifier;
+        myScore.Device = SystemInfo.deviceName;
+        myScore.Date = System.DateTime.Now;
+        BestScoresController.SendBestScoreToServer(myScore);
+    }
 }

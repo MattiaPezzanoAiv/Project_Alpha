@@ -79,7 +79,7 @@ public class Bullet : MonoBehaviour,IBullet {
         if(damageable != null)
         {
             PlayerStatistic playerStat = owner.GetComponent<PlayerStatistic>();
-            PlayerStatistic enemyStat = col.collider.GetComponent<PlayerStatistic>();
+            EnemyStatistic enemyStat = col.collider.GetComponent<EnemyStatistic>();
             float dmgTaken = (Damage + playerStat.AttackPower) * (1 - enemyStat.DamageReduction);
             damageable.GetDamage((int)dmgTaken);
             //spawn blood particle
